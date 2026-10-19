@@ -48,17 +48,12 @@ class SwSocialGroup extends SwSocialShared
 
 		$content = $this->renderItems($items);
 
-		return Html::tag(
-			$this->inline ? 'span' : 'div',
-			$content,
-			[
-				'class' => [
-					'sw-social-group',
-					'sw-social-group-type-' . $this->type,
-					$this->inline ? 'sw-social-group-inline' : 'sw-social-group-block',
-				],
-			]
-		);
+		return Html::tag('nav', $content, [
+			'class' => [
+				'sw-social',
+				'sw-social-' . $this->name,
+			],
+		]);
 	}
 
 	protected function renderItems(array $items): string
@@ -137,4 +132,14 @@ class SwSocialGroup extends SwSocialShared
 	{
 		return $this->size($size);
 	}
+
+	/**
+	public function multiply(int $x = 1): static
+	{
+	}
+
+	public function x(int $x = 1): static
+	{
+	}
+	 */
 }

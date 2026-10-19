@@ -20,6 +20,33 @@ use yii\web\View;
 use common\assets\SwMetaAsset;
 
 /**
+ * Data Dictionary
+ *
+ * All accepted data is a flat dictionary of non-empty string keys
+ * and non-empty string values.
+ *
+ * Data originating from params is treated as safe defaults.
+ * Caller-supplied data is filtered before use.
+ *
+ * Only the keys listed below are consumed by this factory.
+ * Unknown keys may be accepted into the merged options array,
+ * but are ignored unless explicitly used by the registration logic.
+ *
+ * 'title'        => 'Page Title',             // from params
+ * 'author'       => 'Page Author',            // from params
+ * 'contentType'  => 'content-type',           // from params
+ * 'description'  => 'Page description.',
+ * 'keywords'     => 'Page keywords',
+ * 'canonicalUrl' => 'http://steppewest.com/...',
+ * 'updatedTime'  => 'timestamp',
+ *
+ * Override with extreme caution.
+ *
+ * 'locale'       => 'locale',                 // from params
+ * 'viewport'     => 'viewport',               // from params
+ */
+
+/**
 	Yii::$app->params['swMeta'] => [
 		'locale'      => 'en_AU',
 		'viewport'    => 'width=device-width, initial-scale=1, shrink-to-fit=no',
@@ -29,26 +56,6 @@ use common\assets\SwMetaAsset;
 	],
  */
 
-/**
- * data dictionary
- *
- * all data is strings or arrays of strings
- * data originating from params is safe
- *
- * string locale (params)
- * string viewport (params)
- * string author (params)
- * string contentType (params)
- * array  browserLinks (params)
- * array  browserMeta (params)
- * array  browserImages (params)
- * string title
- * string description
- * string keywords
- * string canonicalUrl
- * string updatedTime
- */
-
 abstract class SwMetaFactory
 {
 	/**
@@ -56,11 +63,11 @@ abstract class SwMetaFactory
 	 * 10 to 19 - frontend pages
 	 * 20 to 29 - backend pages
 	 */
-	private const ERROR_PAGE   = 0;
-	private const FRONT_END    = 10;
-	private const BACK_END     = 20;
+	protected const ERROR_PAGE   = 0;
+	protected const FRONT_END    = 10;
+	protected const BACK_END     = 20;
 
-	private const TWITTER_CARD = [
+	protected const TWITTER_CARD = [
 		'name'    => 'twitter:card',
 		'content' => 'summary_large_image',
 	];
@@ -71,7 +78,7 @@ abstract class SwMetaFactory
 
 	public static function frontend(View $view, array $options = []): void
 	{
-		static::registerMetaData($view, static::FRONT_END, $options);
+		static::registerMetaData($view, self::FRONT_END, $options);
 	}
 
 	public static function f(View $view, array $options = []): void
@@ -81,7 +88,7 @@ abstract class SwMetaFactory
 
 	public static function backend(View $view): void
 	{
-		static::registerMetaData($view, static::BACK_END);
+		static::registerMetaData($view, self::BACK_END);
 	}
 
 	public static function b(View $view): void
@@ -91,7 +98,7 @@ abstract class SwMetaFactory
 
 	public static function errorPage(View $view): void
 	{
-		static::registerMetaData($view, static::ERROR_PAGE);
+		static::registerMetaData($view, self::ERROR_PAGE);
 	}
 
 	public static function e(View $view): void
@@ -108,7 +115,7 @@ abstract class SwMetaFactory
 		$options  = static::mergeOptions($options);
 		$asset    = SwMetaAsset::register($view);
 		$assetUrl = $asset->baseUrl;
-		$fullMeta = $pageType === static::FRONT_END;
+		$fullMeta = $pageType === self::FRONT_END;
 
 		/**
 		 * No special treatment required for these
@@ -146,7 +153,7 @@ abstract class SwMetaFactory
 				'property' => 'og:locale',
 				'content'  => $options['locale'] ?? 'en_AU',
 			]); // og:locale
-			$view->registerMetaTag(static::TWITTER_CARD); // twitter:card
+			$view->registerMetaTag(self::TWITTER_CARD); // twitter:card
 
 			if (static::hasStringValue($options['title'] ?? null)) {
 				$view->registerMetaTag([
