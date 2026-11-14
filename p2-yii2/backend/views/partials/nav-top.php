@@ -12,7 +12,7 @@ use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use p2m\helpers\BI;
 use p2m\helpers\FI;
-use frontend\common\SwBanner;
+use common\helpers\SwBanner;
 
 /* @var $this yii\web\View */
 

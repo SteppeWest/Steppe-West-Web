@@ -9,7 +9,7 @@
  */
 
 use yii\bootstrap5\Html;
-use backend\helpers\SwMeta;
+use common\helpers\SwMetaFactory;
 
 /** @var yii\web\View $this */
 /** @var string|null  $title */
@@ -19,7 +19,7 @@ $appName   = Yii::$app->name;
 $pageTitle = $this->title ?: 'Dashboard';
 $fullTitle = $pageTitle . ' – ' . $appName;
 
-SwMeta::b($this);
+SwMetaFactory::b($this);
 
 Html::tag('title', $this->title);
 
