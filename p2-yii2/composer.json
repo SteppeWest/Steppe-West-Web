@@ -20,6 +20,7 @@
 		"p2made/p2y2-things": "dev-5.0-dev",
 		"p2made/p2y2-admin": "dev-5.0-dev",
 		"p2made/p2y2-themes": "dev-5.0-dev",
+		"p2made/p2y2-contacts": "dev-master",
 		"p2made/p2y2-rbac-users": "dev-0.1-dev",
 		"p2made/p2y2-things-demo": "dev-5.0-dev"
 	},
@@ -63,6 +64,13 @@
 		{
 			"type": "path",
 			"url": "../../../Developer/Web/p2made/p2y2-fullcalendar",
+			"options": {
+				"symlink": true
+			}
+		},
+		{
+			"type": "path",
+			"url": "../../../Developer/Web/p2made/p2y2-contacts",
 			"options": {
 				"symlink": true
 			}
